@@ -15,21 +15,24 @@ let g:project_loaded = 1
 let s:save_cpoptions = &cpoptions
 set cpoptions&vim
 
-function! s:detect_project() abort
-    let l:find_dir = finddir('.git', expand('%:p:h') . ';')
-    " not found .git directory
-    if l:find_dir ==# ''
-        return
-    endif
+function! s:lcd_project_root() abort
     let l:current_dir = getcwd()
-    let b:project_root = get(
-                \ b:,
-                \ 'project_root',
-                \ fnamemodify(fnamemodify(l:find_dir, ':p:h'), ':h')
-                \)
-    if l:current_dir !=# b:project_root
+    if b:project_root !=# '' && b:project_root !=# l:current_dir
         silent! execute 'lcd ' . b:project_root
     endif
+endfunction
+
+function! s:detect_project() abort
+    if !exists('b:project_root')
+        let l:find_dir = finddir('.git', expand('%:p:h') . ';')
+        " not found .git directory
+        if l:find_dir ==# ''
+            let b:project_root = ''
+        else
+            let b:project_root = fnamemodify(fnamemodify(l:find_dir, ':p:h'), ':h')
+        endif
+    endif
+    call s:lcd_project_root()
 endfunction
 
 augroup project_init
