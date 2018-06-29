@@ -19,6 +19,8 @@ function! s:lcd_project_root() abort
     let l:current_dir = getcwd()
     if b:project_root !=# '' && b:project_root !=# l:current_dir
         silent! execute 'lcd ' . b:project_root
+        "save project path
+        silent! call ProjectAdd(b:project_root)
     endif
 endfunction
 
@@ -35,10 +37,18 @@ function! s:detect_project() abort
     call s:lcd_project_root()
 endfunction
 
-augroup project_init
-  autocmd!
-  autocmd BufEnter * call s:detect_project()
+function! s:init() abort
+    augroup project_init
+        autocmd!
+        autocmd BufEnter * call s:detect_project()
+    augroup END
+endfunction
+
+augroup project_start
+    autocmd!
+    autocmd VimEnter * call s:init()
 augroup END
+
 
 let s:save_cpoptions = &cpoptions
 set cpoptions&vim

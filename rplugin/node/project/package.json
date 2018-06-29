@@ -1,0 +1,13 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "project plugin for neovim",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ooiss@qq.com",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {}
+}
