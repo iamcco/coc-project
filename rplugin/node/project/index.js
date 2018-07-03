@@ -15,7 +15,7 @@ class App {
 
     }
 
-    async addProject(project) {
+    async addProject([project]) {
         const path = require('path');
         const fs = require('fs');
         const { nvim } = this.plugin;
