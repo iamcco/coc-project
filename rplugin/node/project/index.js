@@ -29,7 +29,7 @@ class App {
         }
 
         if (!this.projects) {
-            if (fs.existsSync(project)) {
+            if (fs.existsSync(this.pathToSaveProjects)) {
                 this.projects = JSON.parse(fs.readFileSync(this.pathToSaveProjects).toString());
             } else {
                 this.projects = {};

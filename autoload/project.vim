@@ -37,4 +37,5 @@ function! project#init(timer_id) abort
     augroup END
     au! project_start
     augroup! project_start
+    call s:detect_project()
 endfunction
