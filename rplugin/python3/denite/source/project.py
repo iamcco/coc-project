@@ -57,8 +57,11 @@ class Source(Base):
     def gather_candidates(self, context):
         candidata = []
         path_to_save_project = self.vim.eval('project#util#get_path_to_save_project()');
-        project_map = json.loads(open(path_to_save_project).read())
-        if path_to_save_project != '':
+        try:
+            project_map = json.loads(open(path_to_save_project).read())
+        except Exception:
+            project_map = {}
+        if len(project_map) > 0:
             candidata = [{
                 'word': '%s [%s] -> %s' % (
                         os.path.basename(value),
