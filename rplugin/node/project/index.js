@@ -7,8 +7,8 @@ class App {
         // save plugin object
         this.plugin = plugin;
 
-        this.pathToSaveProjects = '';
-        this.projects = null;
+        this.pathToSaveProject = '';
+        this.project = null;
 
         // register
         plugin.registerFunction('ProjectAdd', [this, this.addProject]);
@@ -16,29 +16,22 @@ class App {
     }
 
     async addProject([project]) {
-        const path = require('path');
         const fs = require('fs');
         const { nvim } = this.plugin;
 
-        if (!this.pathToSaveProjects) {
-            try {
-                this.pathToSaveProjects = await nvim.eval('g:project_save_path');
-            } catch(e) {
-                this.pathToSaveProjects = path.join(require('os').homedir(), '.projects.json');
-            }
+        if (!this.pathToSaveProject) {
+            this.pathToSaveProject = await nvim.eval('project#util#get_path_to_save_project()');
         }
 
-        if (!this.projects) {
-            if (fs.existsSync(this.pathToSaveProjects)) {
-                this.projects = JSON.parse(fs.readFileSync(this.pathToSaveProjects).toString());
-            } else {
-                this.projects = {};
-            }
+        if (fs.existsSync(this.pathToSaveProject)) {
+            this.project = JSON.parse(fs.readFileSync(this.pathToSaveProject).toString());
+        } else {
+            this.project = {};
         }
 
-        this.projects[project] = Date.now();
+        this.project[project] = Date.now();
 
-        fs.writeFileSync(this.pathToSaveProjects, JSON.stringify(this.projects));
+        fs.writeFileSync(this.pathToSaveProject, JSON.stringify(this.project));
     }
 }
 
