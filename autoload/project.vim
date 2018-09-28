@@ -19,21 +19,19 @@ endfunction
 
 function! s:detect_project() abort
     if !exists('b:project_root')
-        let l:current_dir = expand('%:p:h')
-        " goto the same directory of open file
-        silent! execute 'lcd ' . l:current_dir
-        let l:find_dir = findfile('.git', l:current_dir . ';')
-        if l:find_dir ==# ''
-            let l:find_dir = finddir('.git', l:current_dir . ';')
+        let l:file_dir = expand('%:p:h')
+        let l:find_path = findfile('.git', l:file_dir . ';')
+        if l:find_path ==# ''
+            let l:find_path = finddir('.git', l:file_dir . ';')
         endif
         " not found .git directory
-        if l:find_dir ==# ''
+        if l:find_path ==# ''
             let b:project_root = ''
         else
-            if l:find_dir =~# '\v^/'
-                let b:project_root = fnamemodify(l:find_dir, ':p:h')
+            if l:find_path =~# '\v^/'
+                let b:project_root = fnamemodify(l:find_path, ':h')
             else
-                let b:project_root = fnamemodify(l:current_dir . '/' . l:find_dir, ':p:h')
+                let b:project_root = fnamemodify(getcwd() . '/' . l:find_path, ':h')
             endif
         endif
     endif
