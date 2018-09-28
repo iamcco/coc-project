@@ -19,7 +19,10 @@ endfunction
 
 function! s:detect_project() abort
     if !exists('b:project_root')
-        let l:find_dir = finddir('.git', expand('%:p:h') . ';')
+        let l:find_dir = findfile('.git', expand('%:p:h') . ';')
+        if l:find_dir ==# ''
+            let l:find_dir = finddir('.git', expand('%:p:h') . ';')
+        endif
         " not found .git directory
         if l:find_dir ==# ''
             let b:project_root = ''
