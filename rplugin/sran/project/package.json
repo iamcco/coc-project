@@ -2,12 +2,17 @@
   "name": "project",
   "version": "1.0.0",
   "description": "project plugin for neovim",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
+    "build": "tsc -p ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ooiss@qq.com",
   "license": "ISC",
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/node": "^11.9.4",
+    "sran.nvim": "^0.0.2",
+    "typescript": "^3.3.3"
+  }
 }

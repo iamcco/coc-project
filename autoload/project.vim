@@ -13,7 +13,7 @@ function! s:lcd_project_root() abort
             silent! execute 'lcd ' . b:project_root
         endif
         "save project path
-        silent! call ProjectAdd(b:project_root)
+        call sran#rpc#notify('project_nvim_add', b:project_root)
     endif
 endfunction
 
@@ -41,7 +41,7 @@ function! s:detect_project() abort
     call s:lcd_project_root()
 endfunction
 
-function! project#init(timer_id) abort
+function! project#init(...) abort
     augroup project_init
         autocmd!
         autocmd BufEnter * call s:detect_project()

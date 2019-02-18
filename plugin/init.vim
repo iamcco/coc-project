@@ -15,10 +15,14 @@ let g:project_loaded = 1
 let s:save_cpoptions = &cpoptions
 set cpoptions&vim
 
-augroup project_start
+if get(g:, 'sran_node_channel_id', -1) ==# 1
+  call project#init()
+else
+  augroup project_start
     autocmd!
-    autocmd VimEnter * call timer_start(200, 'project#init')
-augroup END
+    autocmd User SranNvimRpcReady call project#init()
+  augroup END
+endif
 
 let s:save_cpoptions = &cpoptions
 set cpoptions&vim

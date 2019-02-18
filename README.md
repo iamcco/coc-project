@@ -5,13 +5,8 @@
 
 ## install
 
-> only support neovim
-
-```bash
-npm install -g neovim
-```
-
-```vim
+```viml
+Plug 'iamcco/sran.nvim'
 Plug 'iamcco/project.vim'
 ```
 
