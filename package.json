@@ -1,0 +1,59 @@
+{
+  "name": "coc-project",
+  "version": "0.0.1",
+  "description": "project extension for coc.nvim",
+  "keywords": [
+    "coc.nvim",
+    "project",
+    "workspace",
+    "root"
+  ],
+  "main": "./out/index.js",
+  "repository": "https://github.com/iamcco/coc-project",
+  "author": "iamcco <ooiss@qq.com>",
+  "license": "MIT",
+  "private": false,
+  "engines": {
+    "coc": "^0.0.67"
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "properties": {
+        "project.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Is enable coc-project"
+        },
+        "project.dbpath": {
+          "type": "string",
+          "default": "~/.coc-project",
+          "description": "file path to save project list"
+        },
+        "project.trace.server": {
+          "type": "string",
+          "default": "off",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "description": "Trace level of coc-project server"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p ./"
+  },
+  "devDependencies": {
+    "coc.nvim": "^0.0.67",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "vscode-languageserver-protocol": "^3.14.1"
+  }
+}

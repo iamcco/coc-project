@@ -1,21 +1,51 @@
-# project.vim
+# project extension for coc
 
-- auto change the cwd to the project directory
-- denite source for jump bewteen projects
+auto switch current pwd to workspace directory and
+save workspace directory to project list.
 
-## install
+## Install
 
-```viml
-Plug 'iamcco/sran.nvim'
-Plug 'iamcco/project.vim'
+``` vim
+CocInstall coc-project
 ```
 
-## config
+## Usage & config
 
-- `g:path_to_save_project` data to save
-- `Denite project` to open project list
+``` vim
+:CocList project
+```
 
-## Denite action
+actions:
 
-- `open` open project directory
-- `delete` delete project from the list
+- open (default): open project directory
+
+config:
+
+``` jsonc
+"project.enable": {
+  "type": "boolean",
+  "default": true,
+  "description": "Is enable coc-project"
+},
+"project.dbpath": {
+  "type": "string",
+  "default": "~/.coc-project",
+  "description": "file path to save project list"
+},
+"project.trace.server": {
+  "type": "string",
+  "default": "off",
+  "enum": [
+    "off",
+    "messages",
+    "verbose"
+  ],
+  "description": "Trace level of coc-project server"
+}
+```
+
+### Buy Me A Coffee ☕️
+
+![btc](https://img.shields.io/keybase/btc/iamcco.svg?style=popout-square)
+
+![image](https://user-images.githubusercontent.com/5492542/42771079-962216b0-8958-11e8-81c0-520363ce1059.png)

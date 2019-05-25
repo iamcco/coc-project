@@ -34,41 +34,43 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs_1 = __importDefault(require("fs"));
-function default_1(plugin) {
-    var _this = this;
-    var pathToSaveProject = null;
-    var projects = {};
-    var nvim = plugin.nvim;
-    nvim.on('notification', function (method, args) { return __awaiter(_this, void 0, void 0, function () {
-        var project;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (!(method === 'project_nvim_add')) return [3 /*break*/, 3];
-                    project = args[0];
-                    if (!!pathToSaveProject) return [3 /*break*/, 2];
-                    return [4 /*yield*/, nvim.call('project#util#get_path_to_save_project')];
-                case 1:
-                    pathToSaveProject = _a.sent();
-                    _a.label = 2;
-                case 2:
-                    if (fs_1.default.existsSync(pathToSaveProject)) {
-                        projects = JSON.parse(fs_1.default.readFileSync(pathToSaveProject).toString());
+var coc_nvim_1 = require("coc.nvim");
+var Project = /** @class */ (function () {
+    function Project(projects) {
+        var _this = this;
+        this.projects = projects;
+        this.name = 'project';
+        this.description = 'project list';
+        this.defaultAction = 'open';
+        this.actions = [];
+        this.actions.push({
+            name: 'open',
+            execute: function (item) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    if (Array.isArray(item)) {
+                        return [2 /*return*/];
                     }
-                    else {
-                        projects = {};
-                    }
-                    projects[project] = Date.now();
-                    fs_1.default.writeFileSync(pathToSaveProject, JSON.stringify(projects));
-                    _a.label = 3;
-                case 3: return [2 /*return*/];
-            }
+                    coc_nvim_1.workspace.nvim.command("e " + item.filterText);
+                    return [2 /*return*/];
+                });
+            }); }
         });
-    }); });
-}
-exports.default = default_1;
+    }
+    Project.prototype.loadItems = function (_context) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, Object.keys(this.projects).map(function (workdir) {
+                        return {
+                            label: workdir + " [" + new Date(_this.projects[workdir]).toString() + "]",
+                            filterText: workdir
+                        };
+                    })];
+            });
+        });
+    };
+    return Project;
+}());
+exports.default = Project;
+//# sourceMappingURL=project.js.map
