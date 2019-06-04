@@ -1,7 +1,7 @@
 import { homedir } from 'os';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { ExtensionContext, workspace, listManager, Uri } from 'coc.nvim'
-import { TextDocument } from 'vscode-languageserver-protocol';
+import { TextDocument, WorkspaceFolder } from 'vscode-languageserver-protocol';
 
 import Project from './source/project';
 
@@ -69,10 +69,25 @@ export async function activate(context: ExtensionContext): Promise<void> {
         }
       }
     }
-    const workdirFold = workspace.getWorkspaceFolder(textDocument.uri)
+
+    let workdirFold: WorkspaceFolder
+
+    // find inner workspace
+    workspace.workspaceFolders
+      .slice()
+      .sort((a, b) => b.uri.length - a.uri.length)
+      .some(w => {
+        if (textDocument.uri.startsWith(w.uri)) {
+          workdirFold = w
+          return true
+        }
+        return false
+      })
+
     if (!workdirFold) {
       return
     }
+
     const workdir = Uri.parse(workdirFold.uri).fsPath
     if (workdir) {
       projects[workdir] = Date.now()
