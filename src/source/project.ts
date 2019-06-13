@@ -12,7 +12,10 @@ export default class Project implements IList {
   public readonly defaultAction = 'open'
   public actions: ListAction[] = []
 
-  constructor(private projects: Record<string, number>) {
+  constructor(
+    private projects: Record<string, number>,
+    updateProjectList: (workdir: string[]) => void
+  ) {
     this.actions.push({
       name: 'open',
       execute: async item => {
@@ -20,6 +23,13 @@ export default class Project implements IList {
           return
         }
         workspace.nvim.command(`e ${item.filterText}`)
+      }
+    })
+    this.actions.push({
+      name: 'delete',
+      execute: async item => {
+        const workdirs = [].concat(item).map(n => n.filterText)
+        updateProjectList(workdirs)
       }
     })
   }

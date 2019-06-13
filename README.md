@@ -18,6 +18,7 @@ CocInstall coc-project
 actions:
 
 - open (default): open project directory
+- delete: delete project directory from list
 
 config:
 

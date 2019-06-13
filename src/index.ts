@@ -29,31 +29,40 @@ export async function activate(context: ExtensionContext): Promise<void> {
   })
 
   subscriptions.push(
-    listManager.registerList(new Project(projects))
+    listManager.registerList(new Project(projects, updateProjectList))
   )
 
   subscriptions.push(
     workspace.registerAutocmd({
       event: 'VimLeavePre',
       request: true,
-      callback: () => {
-        try {
-          let data = {}
-          if (existsSync(dbpath)) {
-            data = JSON.parse(readFileSync(dbpath).toString())
-          }
-          writeFileSync(dbpath, JSON.stringify({
-            ...data,
-            ...projects
-          }))
-        } catch (error) {
-          trace !== 'off' && output.append(`\nsave dbpath: ${error.stack || error.message || error}`)
-        }
-      }
+      callback: updateProjectList
     })
   )
 
-  workspace.onDidOpenTextDocument(openTextDocument)
+  workspace.onDidOpenTextDocument(openTextDocument, null, subscriptions)
+
+  function updateProjectList(workdirs: string[]) {
+    try {
+      let data = {}
+      if (existsSync(dbpath)) {
+        data = JSON.parse(readFileSync(dbpath).toString())
+      }
+      const newData = {
+        ...data,
+        ...projects
+      }
+      if (workdirs) {
+        workdirs.forEach(workdir => {
+          delete projects[workdir]
+          delete newData[workdir]
+        })
+      }
+      writeFileSync(dbpath, JSON.stringify(newData))
+    } catch (error) {
+      trace !== 'off' && output.append(`\nsave dbpath: ${error.stack || error.message || error}`)
+    }
+  }
 
   async function openTextDocument (textDocument: TextDocument) {
     if (!isInit) {
