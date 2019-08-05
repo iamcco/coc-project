@@ -21,12 +21,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   let output = trace !== 'off' ? workspace.createOutputChannel('coc-project') : undefined
   let isInit = false
 
-  workspace.ready.then(async () => {
-    const textDocument = await workspace.document
-    if (textDocument) {
-      openTextDocument(textDocument.textDocument)
-    }
-  })
+  workspace.ready.then(enterBuffer)
 
   subscriptions.push(
     listManager.registerList(new Project(projects, updateProjectList))
@@ -40,7 +35,20 @@ export async function activate(context: ExtensionContext): Promise<void> {
     })
   )
 
-  workspace.onDidOpenTextDocument(openTextDocument, null, subscriptions)
+  subscriptions.push(
+    workspace.registerAutocmd({
+      event: 'BufEnter',
+      request: false,
+      callback: enterBuffer
+    })
+  )
+
+  async function enterBuffer() {
+    const textDocument = await workspace.document
+    if (textDocument) {
+      openTextDocument(textDocument.textDocument)
+    }
+  }
 
   function updateProjectList(workdirs: string[]) {
     try {
@@ -66,6 +74,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   async function openTextDocument (textDocument: TextDocument) {
     if (!isInit) {
+      isInit = true
       if (existsSync(dbpath)) {
         try {
           const data = JSON.parse(readFileSync(dbpath).toString())
