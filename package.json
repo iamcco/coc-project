@@ -1,6 +1,6 @@
 {
   "name": "coc-project",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "project extension for coc.nvim",
   "keywords": [
     "coc.nvim",
@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@types/node": "^12.0.4",
-    "coc.nvim": "^0.0.67",
+    "coc.nvim": "^0.0.73",
     "typescript": "^3.4.5"
   },
   "dependencies": {
