@@ -1,3 +1,4 @@
+import {homedir} from 'os'
 import {
   IList,
   ListAction,
@@ -5,6 +6,7 @@ import {
   ListItem,
   workspace,
 } from 'coc.nvim'
+import colors from 'colors/safe'
 
 export default class Project implements IList {
   public readonly name = 'project'
@@ -37,7 +39,7 @@ export default class Project implements IList {
   public async loadItems(_context: ListContext): Promise<ListItem[]> {
     return Object.keys(this.projects).map<ListItem>(workdir => {
       return {
-        label: `${workdir} [${new Date(this.projects[workdir]).toString()}]`,
+        label: `${workdir.replace(homedir(), '~')} ${colors.gray(new Date(this.projects[workdir]).toString())}`,
         filterText: workdir
       }
     })

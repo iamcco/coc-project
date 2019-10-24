@@ -22,28 +22,14 @@ actions:
 
 config:
 
-``` jsonc
-"project.enable": {
-  "type": "boolean",
-  "default": true,
-  "description": "Is enable coc-project"
-},
-"project.dbpath": {
-  "type": "string",
-  "default": "~/.coc-project",
-  "description": "file path to save project list"
-},
-"project.trace.server": {
-  "type": "string",
-  "default": "off",
-  "enum": [
-    "off",
-    "messages",
-    "verbose"
-  ],
-  "description": "Trace level of coc-project server"
-}
-```
+- `project.enable`: "default": true
+  > "description": "Is enable coc-project"
+- `project.dbpath`: "default": "~/.coc-project",
+  > "description": "file path to save project list"
+- `project.rootPatterns`: "default": [".git"]
+  > "description": "project root patterns"
+- `project.trace.server`: "default": "off"
+  > "description": "Trace level of coc-project server"
 
 ### Buy Me A Coffee ☕️
 

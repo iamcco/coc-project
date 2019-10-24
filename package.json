@@ -1,6 +1,6 @@
 {
   "name": "coc-project",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "project extension for coc.nvim",
   "keywords": [
     "coc.nvim",
@@ -33,6 +33,13 @@
           "default": "~/.coc-project",
           "description": "file path to save project list"
         },
+        "project.rootPatterns": {
+          "type": "array",
+          "default": [
+            ".git"
+          ],
+          "description": "project root patterns"
+        },
         "project.trace.server": {
           "type": "string",
           "default": "off",
@@ -47,14 +54,17 @@
     }
   },
   "scripts": {
-    "build": "tsc -p ./"
+    "build": "rm -rf ./out && webpack"
   },
   "devDependencies": {
     "@types/node": "^12.0.4",
-    "coc.nvim": "^0.0.73",
-    "typescript": "^3.4.5"
-  },
-  "dependencies": {
-    "vscode-languageserver-protocol": "^3.14.1"
+    "coc.nvim": "^0.0.74",
+    "colors": "^1.4.0",
+    "findup": "^0.1.5",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.4.5",
+    "vscode-languageserver-protocol": "^3.14.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
   }
 }
