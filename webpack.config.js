@@ -6,7 +6,7 @@ module.exports = {
     index: './src/index.ts'
   },
   target: 'node',
-  mode: 'none',
+  mode: 'production',
   resolve: {
     mainFields: ['module', 'main'],
     extensions: ['.js', '.ts']
