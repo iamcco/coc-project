@@ -43,6 +43,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
     })
   )
 
+  // resolve current document when coc ready
+  workspace.ready.then(() => {
+    enterBuffer()
+  })
+
   async function enterBuffer() {
     const textDocument = await workspace.document
     if (textDocument) {
