@@ -106,7 +106,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     const { nvim } = workspace
     const currentWorkdir = await nvim.commandOutput('pwd')
     if (projectRoot !== currentWorkdir.trim()) {
-      nvim.command(`silent! lcd ${projectRoot}`, true)
+      nvim.command(`silent! lcd ${projectRoot}`)
     }
   }
 }

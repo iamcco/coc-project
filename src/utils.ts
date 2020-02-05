@@ -1,4 +1,4 @@
-import path from 'path'
+import path, {resolve} from 'path'
 import findup from 'findup'
 
 // cover cb type async function to promise
@@ -29,7 +29,7 @@ export async function findProjectRootDirectory(
     }
   }
   if (dirCandidate.length) {
-    return dirCandidate
+    return resolve(dirCandidate)
   }
   return
 }
