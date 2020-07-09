@@ -24,12 +24,16 @@ export async function findProjectRootDirectory(
   let dirCandidate = ''
   for (const pattern of patterns) {
     const [err, dir] =  await pcb(findup)(dirname, pattern)
-    if (!err && dir && dir !== '/' && dir.length > dirCandidate.length) {
-      dirCandidate = dir
+    let absDir = dir
+    if (absDir) {
+      absDir = resolve(absDir)
+    }
+    if (!err && absDir && absDir !== '/' && absDir.length > dirCandidate.length) {
+      dirCandidate = absDir
     }
   }
   if (dirCandidate.length) {
-    return resolve(dirCandidate)
+    return dirCandidate
   }
   return
 }

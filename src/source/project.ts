@@ -24,7 +24,8 @@ export default class Project implements IList {
         if (Array.isArray(item)) {
           return
         }
-        workspace.nvim.command(`e ${item.filterText}`)
+        await workspace.nvim.command(`e ${item.filterText}`)
+        await workspace.nvim.command(`silent! lcd ${item.filterText}`)
       }
     })
     this.actions.push({
