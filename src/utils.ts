@@ -33,7 +33,7 @@ export async function findProjectRootDirectory(
     }
   }
   if (dirCandidate.length) {
-    return dirCandidate
+    return dirCandidate.replace(/^c:\\/, 'C:\\')
   }
   return
 }
