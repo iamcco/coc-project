@@ -1,6 +1,6 @@
 {
   "name": "coc-project",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "project extension for coc.nvim",
   "keywords": [
     "coc.nvim",
